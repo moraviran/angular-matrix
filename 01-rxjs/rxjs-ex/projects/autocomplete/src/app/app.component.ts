@@ -10,22 +10,22 @@ import { TodoService } from './todo.service';
         name="search"
         type="search"
         placeholder="Search..."
-        (input)="onSearchChange($event.target.value)"
+        [(ngModel)]="value"
       />
     </form>
     <ul>
-      <li *ngFor="let item of items | async">
         {{ item | json}}
+      <li *ngFor="let item of items() | async">
       </li>
     </ul>
   </div>
   `,
 })
 export class AppComponent {
-  items;
-  public onSearchChange(value){
-    this.items = this._todoS.search(value);
+  public items(){
+    return this._todoS.search(this.value);
   }
+  value: string;
 
   constructor(private _todoS : TodoService){ }
 
